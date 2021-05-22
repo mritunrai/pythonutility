@@ -1,0 +1,32 @@
+{
+      "liveFace": {
+            "to-be-reviewed": "no",
+            "value": "yes"
+      },
+      "qualityChecks": {
+            "blur": {
+                  "to-be-reviewed": "no",
+                  "value": "no"
+            },
+            "eyesClosed": {
+                  "to-be-reviewed": "no",
+                  "value": "yes"
+            },
+            "maskPresent": {
+                  "to-be-reviewed": "no",
+                  "value": "no"
+            },
+            "multipleFaces": {
+                  "value": "no"
+            }
+      },
+      "summary": {
+            "action": "manualReview",
+            "details": [
+                  {
+                        "code": "005",
+                        "message": "Eyes closed in selfie"
+                  }
+            ]
+      }
+}
