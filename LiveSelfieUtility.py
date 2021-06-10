@@ -1,6 +1,7 @@
 import json
 import os.path
 import sys
+import time
 
 import requests
 from requests.exceptions import HTTPError
@@ -73,6 +74,7 @@ def countFiles(file_path):
 def hyperverge_api_result(file_path):
     try:
 
+
         files = {"image": (file_path, open(file_path, "rb"), "image/jpg")}
 
         headers = {"appid": "4baeca",
@@ -82,6 +84,7 @@ def hyperverge_api_result(file_path):
 
         url = "https://apac-faceid.hyperverge.co/v2/photo/liveness"
 
+        time.sleep(3)
         liveness_api = requests.post(url, headers=headers, files=files)
 
         print("***Rest Endpoint Headers :", liveness_api.headers)
@@ -90,7 +93,9 @@ def hyperverge_api_result(file_path):
         print("***Status Code :", liveness_api.status_code)
         print("***Reason :", liveness_api.reason)
 
-        return liveness_api.json().get("result")
+       # return liveness_api.json().get("result")
+
+        return  liveness_api.json()
     except HTTPError as ex:
         print(ex)
     except requests.exceptions.RequestException as err:
