@@ -40,7 +40,7 @@ def listAllSelfie():
 
             target_path = os.path.join(target_dir, files)
 
-            print("**(file_path***"+target_path)
+            print("**(file_path***" + target_path)
 
             out_file = open(target_path + ".json", "w")
 
@@ -50,7 +50,7 @@ def listAllSelfie():
         print(ex)
     finally:
         print("release resources")
-        out_file.close()
+        #out_file.close()
 
 
 def countFiles(file_path):
@@ -73,8 +73,6 @@ def countFiles(file_path):
 
 def hyperverge_api_result(file_path):
     try:
-
-
         files = {"image": (file_path, open(file_path, "rb"), "image/jpg")}
 
         headers = {"appid": "4baeca",
@@ -93,14 +91,15 @@ def hyperverge_api_result(file_path):
         print("***Status Code :", liveness_api.status_code)
         print("***Reason :", liveness_api.reason)
 
-       # return liveness_api.json().get("result")
+    # return liveness_api.json().get("result")
 
-        return  liveness_api.json()
+        return liveness_api.json()
+
     except HTTPError as ex:
         print(ex)
+
     except requests.exceptions.RequestException as err:
         print("OOps: Something Else", err)
-
     except Exception as ex:
         print(ex)
 
