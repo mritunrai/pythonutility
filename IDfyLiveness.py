@@ -1,15 +1,15 @@
 import base64
-from pathlib import Path
 import pprint
+from pathlib import Path
 
 import requests
 
 selfie = '/Users/mkrai/Desktop/fileinput/Multipleface.jpg'
-document = 'https://www.wilddigital.com/upload/img/media/image/1776/standard/KevinAluwi-Gojek(2).png'
-endpoint = 'http://spoof-classifier-38.kyc-face-anti-spoofing.models.id.s.gods.golabs.io/v1/models/spoof-classifier-38:predict'
+syncendpoint = 'https://eve.idfy.com/v3/tasks/sync/check_photo_liveness/face'
+asyncendpoint = 'https://eve.idfy.com/v3/tasks/sync/check_photo_liveness/face'
 
 
-class InHouseDS:
+class IDfyLiveness:
     def __init__(self, endpoint):
         self.endpoint = endpoint
         self.pp = pprint.PrettyPrinter(width=60)
@@ -24,10 +24,10 @@ class InHouseDS:
     def get_request(self):
         path = Path(selfie)
         request = {
-            # Liveness check runs on main image.
-            'image': {
-                'id': 'my_selfie_123',
-                'base64_str': self.to_base64_str(path),
+            'task_id': '74f4c926-250c-43ca-9c53-453e87ceacd1',
+            'group_id': "8e16424a-58fc-4ba4-ab20-5bc8e7c3c41e",
+            'data': {
+                'document1': self.to_base64_str(path),
             }
         }
         return request
@@ -37,11 +37,19 @@ class InHouseDS:
         s = self.pp.pformat(request)
         print(f"Printing Request:\n{s}")
 
-        response = requests.post(endpoint, json=request)
+        headers = {"api-key": "7d2be589-6f24-4d4e-8e5c-a7efc7c41340 ",
+                   "account-id": "2cd0fb2a059c/5f2134c8-f3c6-41d9-ae89-c1b3faf94f54",
+                   "Content-Type": "application/json",
+                   }
+
+        response = requests.post(syncendpoint, json=request, headers=headers)
         response = response.json()
         self.pp.pprint(response)
         s = self.pp.pformat(response)
         print(f"Response:\n{s}")
 
+
 if __name__ == '__main__':
-    InHouseDS(endpoint).run()
+    idfy = IDfyLiveness(syncendpoint)
+
+    idfy.run()
